@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% import "macros/forms.html" as forms %}
+
+{% block pageTitle %}
+Decision
+{% endblock %}
+
+{% block beforeContent %}
+    <a class="govuk-back-link" id="navigateBackLink" name="navigateBackLink" href="/notification/{{ reference }}">Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" id="decisionForm" name="decisionForm" action="/decision/{{ reference }}" method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    {{ forms.legend("decisionHeading", "Are you sure you want to pass notification: " + reference + " to the team lead?") }}
+    
+                    <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
+                        {{ forms.radioConditional("Yes",
+                            "decisionYes", "decision", "Yes", false, "decisionConditional") }}
+
+
+                        <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="decisionConditional">
+                            {{ forms.radio("Propose to Accept", "Accept", "propose", "Accept", false, false) }}
+
+                            {{ forms.radio("Propose to Reject", "Reject", "propose", "Reject", false, false) }}
+
+                            {{ forms.radio("Propose to Request more information", "moreInfo", "propose", "Request more information", false, false) }}
+
+                            {{ forms.textArea(
+                                "Additional Information",
+                                "", "additionalInfo", "additionalInfo", "", "2700") }}
+                        </div>
+    
+                        {{ forms.radio("No",
+                            "decisionNo", "decision", "No", false) }}
+                    </div>
+                </fieldset>
+            </div>
+            {{ forms.saveAndContinueButton("decisionSubmitButton") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

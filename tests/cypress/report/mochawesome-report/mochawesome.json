@@ -1,0 +1,201 @@
+{
+  "stats": {
+    "suites": 0,
+    "tests": 7,
+    "passes": 7,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-09-05T20:48:28.882Z",
+    "end": "2021-09-05T20:50:01.451Z",
+    "duration": 92569,
+    "testsRegistered": 7,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d64b7830-aa80-459a-b416-076d05074d32",
+      "title": "",
+      "fullFile": "cypress/integration/ProdPrototypeMandatoryForm.js",
+      "file": "cypress/integration/ProdPrototypeMandatoryForm.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [
+        {
+          "title": "Can User ACCESS MANDATORY FORM",
+          "fullTitle": "Can User ACCESS MANDATORY FORM",
+          "timedOut": null,
+          "duration": 8131,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "// cy.loginWithUser(); \ncy.loginWithDefaultUser();\ntasklist.FormMandatory();",
+          "err": {},
+          "uuid": "201f6a88-6ae3-4bd4-8fd0-f467620a403b",
+          "parentUUID": "d64b7830-aa80-459a-b416-076d05074d32",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 1",
+          "fullTitle": "Can User Access Question 1",
+          "timedOut": null,
+          "duration": 10726,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist.Question1();",
+          "err": {},
+          "uuid": "cbf9977c-a510-447a-942a-a2e6e1d33abb",
+          "parentUUID": "d64b7830-aa80-459a-b416-076d05074d32",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 2",
+          "fullTitle": "Can User Access Question 2",
+          "timedOut": null,
+          "duration": 5561,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist.Question2();",
+          "err": {},
+          "uuid": "d2a1ecb3-b8ce-42dc-862c-c7ee98db89da",
+          "parentUUID": "d64b7830-aa80-459a-b416-076d05074d32",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 3",
+          "fullTitle": "Can User Access Question 3",
+          "timedOut": null,
+          "duration": 7425,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist.Question3();",
+          "err": {},
+          "uuid": "9147a111-898f-4f45-8ae2-a14e70f1b837",
+          "parentUUID": "d64b7830-aa80-459a-b416-076d05074d32",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 4",
+          "fullTitle": "Can User Access Question 4",
+          "timedOut": null,
+          "duration": 13737,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist.Question4();",
+          "err": {},
+          "uuid": "768f7d9b-4733-439a-9b85-1e353242deeb",
+          "parentUUID": "d64b7830-aa80-459a-b416-076d05074d32",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 5",
+          "fullTitle": "Can User Access Question 5",
+          "timedOut": null,
+          "duration": 23211,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist.Question5();",
+          "err": {},
+          "uuid": "729cf615-b585-4aed-85e1-9a312754c5ba",
+          "parentUUID": "d64b7830-aa80-459a-b416-076d05074d32",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 7",
+          "fullTitle": "Can User Access Question 7",
+          "timedOut": null,
+          "duration": 23477,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist1.Question7();",
+          "err": {},
+          "uuid": "d6c81ed5-0ff5-4a26-bf64-b0d9ca1dd40b",
+          "parentUUID": "d64b7830-aa80-459a-b416-076d05074d32",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [],
+      "passes": [
+        "201f6a88-6ae3-4bd4-8fd0-f467620a403b",
+        "cbf9977c-a510-447a-942a-a2e6e1d33abb",
+        "d2a1ecb3-b8ce-42dc-862c-c7ee98db89da",
+        "9147a111-898f-4f45-8ae2-a14e70f1b837",
+        "768f7d9b-4733-439a-9b85-1e353242deeb",
+        "729cf615-b585-4aed-85e1-9a312754c5ba",
+        "d6c81ed5-0ff5-4a26-bf64-b0d9ca1dd40b"
+      ],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 92268,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/report/mochawesome-report"
+      },
+      "version": "5.2.0"
+    }
+  }
+}

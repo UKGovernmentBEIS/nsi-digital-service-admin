@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="8.7430" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-09-14T14:54:31" tests="1" file="cypress/integration/ProdPrototypeRetrospectiveForm.js" time="8.7430" failures="0">
+    <testcase name="Can User ACCESS RETROSPECTIVE FORM" time="8.7430" classname="Can User ACCESS RETROSPECTIVE FORM">
+    </testcase>
+  </testsuite>
+</testsuites>

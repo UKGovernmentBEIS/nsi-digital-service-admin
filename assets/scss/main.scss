@@ -1,0 +1,11 @@
+// Global styles for <a> and <p> tags
+$govuk-global-styles: true;
+
+// GOVUK styles
+@import "../../node_modules/govuk-frontend/govuk/all";
+
+// Pattern styles
+@import "patterns";
+
+// Custom styles
+@import "custom";

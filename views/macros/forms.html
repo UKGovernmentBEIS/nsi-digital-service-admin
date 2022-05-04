@@ -1,0 +1,139 @@
+{% macro legend(id, text) %}
+<legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+  <h1 class="govuk-fieldset__heading" id="{{ id }}">{{ text }}</h1>
+</legend>
+{% endmacro %}
+
+{% macro textInput(label, id, name, value="", placeholder="", maxLength="100", hintText="", hintTextAfter="" ) %}
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="{{ id }}">{{ label }}</label>
+  <div id="{{ id }}-hint" class="govuk-hint">{{ hintText }}</div>
+  <input class="govuk-input" id="{{ id }}" name="{{ name }}" placeholder="{{ placeholder }}" type="text" value="{{ value }}" maxlength="{{ maxLength }}" required />
+  <div id="{{ id }}-hintAfter" class="govuk-hint">{{ hintTextAfter }}</div>
+</div>
+{% endmacro %}
+
+{% macro textArea(label, hintText, id, name, value="", maxLength="1200", isRequired=false) %}
+<div class="govuk-form-group">
+  <label class="govuk-label govuk-label--s" for="{{ id }}">{{ label }}</label>
+  <div id="{{ id }}-hint" class="govuk-hint">{{ hintText }}</div>
+  <textarea class="govuk-textarea" id="{{ id }}" name="{{ name }}" rows="3" aria-describedby="{{ id }}-hint" maxlength="{{ maxLength }}" {% if isRequired %}required{% endif %}>{{ value }}</textarea>
+</div>
+{% endmacro %}
+
+{% macro radio(label, id, name, value, isChecked, isRequired=true) %}
+<div class="govuk-radios__item">
+  <input class="govuk-radios__input" id="{{ id }}" name="{{ name }}" type="radio" value="{{ value }}" {% if isChecked %}checked{% endif %} {% if isRequired %}required{% endif %} />
+  <label class="govuk-label govuk-radios__label" for="{{ id }}">{{ label }}</label>
+</div>
+{% endmacro %}
+
+{% macro radioConditional(label, id, name, value, isChecked, controlsId) %}
+<div class="govuk-radios__item">
+  <input class="govuk-radios__input" id="{{ id }}" name="{{ name }}" type="radio" value="{{ value }}" data-aria-controls="{{ controlsId }}" {% if isChecked %}checked{% endif %} />
+  <label class="govuk-label govuk-radios__label" for="{{ id }}">{{ label }}</label>
+</div>
+{% endmacro %}
+
+{% macro saveAndContinueButton(id) %}
+<div class="govuk-form-group" >
+  <button id="{{ id }}" class="govuk-button" data-module="govuk-button">Save and continue</button>
+</div>
+{% endmacro %}
+
+{% macro checkYourAnswerDetails(data, ids=[], labels={}, map={}) %}
+  {% for id in ids %}
+    {% if data[id] and labels[id] %}
+    <p class="govuk-body"><strong>{{ labels[id] }}</strong>: 
+        {% if map[data[id]] %}{{ map[data[id]] }}{% else %}{{ data[id] }}{% endif %}
+    </p>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% macro checkYourAnswerDetailsNoLabel(value, map={}) %}
+  {% if value %}
+  <p class="govuk-body">
+    {% if map[value] %}{{ map[value] }}{% else %}{{ value }}{% endif %}
+  </p>
+  {% endif %}
+{% endmacro %}
+
+{% macro filter(searchTerm) %}
+<div class="govuk-form-group govuk-!-margin-bottom-2">
+  <label class="govuk-label" for="width-10">
+    Filter notifications
+  </label>
+  <input class="govuk-input govuk-input--width-10" name="width-10" type="text" id="filterInput" value="{{ searchTerm }}" />
+</div>
+<button class="govuk-button govuk-!-margin-right-1" data-module="govuk-button" id="filterButton">
+  Filter
+</button>
+<button class="govuk-button govuk-button--secondary" data-module="govuk-button" id="clearButton">
+  Clear
+</button>
+{% endmacro %}
+
+{% macro downloadDocument(id, name) %}
+{% if id and name %}
+<p>
+  <strong>File name: </strong>
+  <a class="govuk-link" href="/download-document/{{ id }}">
+    <span>{{ name }}</span>
+  </a>
+</p>
+{% endif %}
+{% endmacro %}
+
+{% macro advancedFilter(searchTerm) %}
+<div>
+  <div class="govuk-form-group govuk-!-margin-bottom-2" style="display: inline-block;">
+    <label class="govuk-label" for="acquirerName">Acquirer</label>
+    <input class="govuk-input govuk-input--width-10" name="acquirerName" type="text" id="acquirerName" value="{{ searchTerm.acquirerName }}" />
+  </div>
+  <div class="govuk-form-group govuk-!-margin-bottom-2" style="display: inline-block;">
+    <label class="govuk-label" for="width-10">
+      Status
+    </label>
+    <select class="govuk-select" id="status" name="status">
+      <option value="NULL" {% if searchTerm.status == "NULL" %}selected{% endif %}>Please select...</option>
+      <option value="In Progress" {% if searchTerm.status == "In Progress" %}selected{% endif %}>In Progress</option>
+      <option value="Submitted" {% if searchTerm.status == "Submitted" %}selected{% endif %}>Submitted</option>
+      <option value="Under Review" {% if searchTerm.status == "Under Review" %}selected{% endif %}>Under Review</option>
+      <option value="Accepted" {% if searchTerm.status == "Accepted" %}selected{% endif %}>Accepted</option>
+      <option value="Rejected" {% if searchTerm.status == "Rejected" %}selected{% endif %}>Rejected</option>
+      <option value="Submitted - Pending Decision" {% if searchTerm.status == "Submitted - Pending Decision" %}selected{% endif %}>Submitted - Pending Decision</option>
+      <option value="Request for Information" {% if searchTerm.status == "Request for Information" %}selected{% endif %}>Request for Information</option>
+    </select>
+    </div>
+  <div class="govuk-form-group govuk-!-margin-bottom-2" style="display: inline-block;">
+  <label class="govuk-label" for="width-10">
+    Notification Type
+  </label>
+  <select class="govuk-select" id="notificationType" name="notificationType">
+    <option value="NULL" {% if searchTerm.notificationType == "NULL" %}selected{% endif %}>Please select...</option>
+    <option value="MANDATORY" {% if searchTerm.notificationType == "MANDATORY" %}selected{% endif %}>Mandatory</option>
+    <option value="VOLUNTARY" {% if searchTerm.notificationType == "VOLUNTARY" %}selected{% endif %}>Voluntary</option>
+    <option value="RETROSPECTIVE" {% if searchTerm.notificationType == "RETROSPECTIVE" %}selected{% endif %}>Retrospective</option>
+  </select>
+  </div>
+  <div class="govuk-form-group govuk-!-margin-bottom-2" style="display: inline-block;">
+    <label class="govuk-label" for="width-10">
+      Submission Start
+    </label>
+    <input class="govuk-input govuk-input--width-10" name="submissionStart" type="date" id="submissionStart" value="{{ searchTerm.submissionStart }}" />
+  </div>
+    <div class="govuk-form-group govuk-!-margin-bottom-2" style="display: inline-block;">
+      <label class="govuk-label" for="width-10">
+        Submission End
+      </label>
+      <input class="govuk-input govuk-input--width-10" name="submissionEnd" type="date" id="submissionEnd" value="{{ searchTerm.submissionEnd }}" />
+    </div>
+</div>
+<button class="govuk-button govuk-!-margin-right-1" data-module="govuk-button" id="advancedFilterButton">
+  Filter
+</button>
+<button class="govuk-button govuk-button--secondary" data-module="govuk-button" id="advancedClearButton">
+  Clear
+</button>
+{% endmacro %}

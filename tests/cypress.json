@@ -1,0 +1,32 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "viewportWidth": 1600,
+  "viewportHeight": 900,
+  "fixturesFolder": "cypress/fixtures",
+  "integrationFolder": "cypress/integration",
+  "pluginsFile": "cypress/plugins/index.js",
+  "screenshotsFolder": "cypress/screenshots",
+  "supportFile": "cypress/support/index.js",
+  "nodeVersion": "system",
+  "videosFolder": "cypress/videos",
+  "ignoreTestFiles": ["U50031*"],
+  "pageLoadTimeout": 10000,
+  "defaultCommandTimeout": 10000,
+  "taskTimeout": 10000,
+  "chromeWebSecurity": false,
+  "experimentalSourceRewriting": false,
+  "db": {
+    "user": "",
+    "password": "",
+    "connectString": "",
+    "privilege": 2
+  },
+  "username": "",
+  "password": "",
+
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "results/results-[hash].xml"
+  },
+  "video": false
+}

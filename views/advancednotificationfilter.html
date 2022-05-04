@@ -1,0 +1,269 @@
+{% extends "layout.html" %}
+{% import "macros/forms.html" as forms %}
+
+{% block pageTitle %}
+Notifications
+{% endblock %}
+
+{% block beforeContent %}
+    <a class="govuk-back-link" id="navigateBackLink" name="navigateBackLink" href="/">Back</a>
+{% endblock %}
+
+{% block content %}
+<style>
+  .pie-chart-status {
+      background:
+        radial-gradient(
+          circle closest-side,
+          transparent 66%,
+          white 0
+        ),
+        conic-gradient(
+          #3775FA 0,
+          #3775FA {{ dataTotals.percentInProgress }}%,
+          #FA69A8 0,
+          #FA69A8 {{ dataTotals.percentInProgress + dataTotals.percentageSubmitted }}%,
+          #5085FA 0,
+          #5085FA {{ dataTotals.percentInProgress + dataTotals.percentageSubmitted + dataTotals.percentageUnderReview }}%,
+          #FABF37 0,
+          #FABF37 {{ dataTotals.percentInProgress + dataTotals.percentageSubmitted + dataTotals.percentageUnderReview + dataTotals.percentageAccepted }}%,
+          #43FA4A 0,
+          #43FA4A {{ dataTotals.percentInProgress + dataTotals.percentageSubmitted + dataTotals.percentageUnderReview + dataTotals.percentageAccepted + dataTotals.percentageRejected }}%,
+          #934FFF 0,
+          #934FFF {{ dataTotals.percentInProgress + dataTotals.percentageSubmitted + dataTotals.percentageUnderReview + dataTotals.percentageAccepted + dataTotals.percentageRejected + dataTotals.percentagePendingDecision }}%,
+          #FFF736 0,
+          #FFF736 {{ dataTotals.percentInProgress + dataTotals.percentageSubmitted + dataTotals.percentageUnderReview + dataTotals.percentageAccepted + dataTotals.percentageRejected + dataTotals.percentagePendingDecision + dataTotals.percentageRequestForInformation }}%
+      );
+      position: relative;
+      width: 450px;
+      min-height: 350px;
+      margin: 0;
+      outline: 1px solid #ccc;
+      font-family: "GDS Transport", arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .pie-chart-status h2 {
+      position: absolute;
+      margin: 1rem;
+    }
+    .pie-chart-status cite {
+      position: absolute;
+      bottom: 0;
+      font-size: 80%;
+      padding: 1rem;
+      color: gray;
+    }
+    .pie-chart-status figcaption {
+      position: absolute;
+      bottom: 1em;
+      right: 1em;
+      font-size: smaller;
+      text-align: right;
+    }
+    .pie-chart-status span:after {
+      display: inline-block;
+      content: "";
+      width: 0.8em;
+      height: 0.8em;
+      margin-left: 0.4em;
+      height: 0.8em;
+      border-radius: 0.2em;
+      background: currentColor;
+    }
+
+    .pie-chart-ntype {
+      background:
+        radial-gradient(
+          circle closest-side,
+          transparent 66%,
+          white 0
+        ),
+        conic-gradient(
+          #D9689C 0,
+          #D9689C {{ dataTotals.percentageMandatory }}%,
+          #48D94B 0,
+          #48D94B {{ dataTotals.percentageMandatory + dataTotals.percentageVoluntary }}%,
+          #6E52D9 0,
+          #6E52D9 {{ dataTotals.percentageMandatory + dataTotals.percentageVoluntary + dataTotals.percentageRetrospective }}%
+      );
+      position: relative;
+      width: 450px;
+      min-height: 350px;
+      margin: 0;
+      outline: 1px solid #ccc;
+      font-family: "GDS Transport", arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .pie-chart-ntype h2 {
+      position: absolute;
+      margin: 1rem;
+    }
+    .pie-chart-ntype cite {
+      position: absolute;
+      bottom: 0;
+      font-size: 80%;
+      padding: 1rem;
+      color: gray;
+    }
+    .pie-chart-ntype figcaption {
+      position: absolute;
+      bottom: 1em;
+      right: 1em;
+      font-size: smaller;
+      text-align: right;
+    }
+    .pie-chart-ntype span:after {
+      display: inline-block;
+      content: "";
+      width: 0.8em;
+      height: 0.8em;
+      margin-left: 0.4em;
+      height: 0.8em;
+      border-radius: 0.2em;
+      background: currentColor;
+    }
+</style>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">Advanced Notification Filter</h1>
+
+        {% if statusMessage %}
+          <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                <li>
+                  <a href="#">{{ statusMessage }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="govuk-form-group">
+            <table class="govuk-table" id="notificationListTable" data-module="moj-sortable-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">Notifications</caption>
+                {{ forms.advancedFilter(searchTerm) }}
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Reference</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Acquirer</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Target</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Date submitted</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Date rejected</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Date accepted</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Date referred</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Type</th>
+                        <th scope="col" class="govuk-table__header" aria-sort="none">Elapsed</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                {% for item in data %}
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">{{ item.reference }}</td>
+                        <td class="govuk-table__cell">{{ item.status }}</td>
+                        <td class="govuk-table__cell" data-sort-value="{{ item.sortableAcquirer }}">{{ item.acquirer }}</td>
+                        <td class="govuk-table__cell" data-sort-value="{{ item.sortablequalifyingTarget }}">{{ item.qualifyingTarget }}</td>
+                        <td class="govuk-table__cell" data-sort-value="{{ item.sortabledatesubmitted }}">{{ item.datesubmitted }}</td>
+                        <td class="govuk-table__cell" data-sort-value="{{ item.sortabledateRejected }}">{{ item.dateRejected }}</td>
+                        <td class="govuk-table__cell" data-sort-value="{{ item.sortabledateAccepted }}">{{ item.dateAccepted }}</td>
+                        <td class="govuk-table__cell" data-sort-value="{{ item.sortabledateReferred }}">{{ item.dateReferred }}</td>
+                        <td class="govuk-table__cell">{{ item.notificationtype }}</td>
+                        <td class="govuk-table__cell" data-sort-value="{{ item.ragStatus.elapsedDays }}"><div class="rag-status rag-status--{{item.ragStatus.state}}">{{ item.ragStatus.elapsedDays }} Days</div></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if data|length > 0 %}
+        <div class="govuk-form-group" style="text-align: center; width: auto">
+          <div style="text-align: left; margin-right: 10px; display: inline-block;">
+            <figure class="pie-chart-status">
+              <h2>Notification Status</h2>
+              <figcaption>
+                In Progress<span style="color:#3775FA"></span><br>
+                Submitted<span style="color:#FA69A8"></span><br>
+                Under Review<span style="color:#5085FA"></span><br>
+                Accepted<span style="color:#FABF37"></span><br>
+                Rejected<span style="color:#43FA4A"></span><br>
+                Submitted - Pending Decision<span style="color:#934FFF"></span><br>
+                Request for Information<span style="color:#FFF736"></span><br>
+              </figcaption>
+              <cite>BEIS NSI</cite>
+            </figure>
+          </div>
+          <div style="text-align: left; display: inline-block;">
+            <figure class="pie-chart-ntype">
+              <h2>Notification Type</h2>
+              <figcaption>
+                Mandatory<span style="color:#D9689C"></span><br>
+                Voluntary<span style="color:#48D94B"></span><br>
+                Retrospective<span style="color:#6E52D9"></span><br>
+              </figcaption>
+              <cite>BEIS NSI</cite>
+            </figure>
+          </div>
+        </div>
+
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Totals</caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Total Notifications</th>
+                <th scope="col" class="govuk-table__header">{{ dataTotals.totalRecords }}</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Total In Progress</th>
+                    <td class="govuk-table__cell">{{ dataTotals.totalInProgress }}</td>
+                  </tr>                
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Submitted</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalSubmitted }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Under Review</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalUnderReview }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Accepted</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalAccepted }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Rejected</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalRejected }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Pending Decision</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalPendingDecision }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Request For Information</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalRequestForInformation }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Mandatory Notifications</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalMandatory }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Voluntary Notifications</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalVoluntary }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Total Retrospective Notifications</th>
+                <td class="govuk-table__cell">{{ dataTotals.totalRetrospective }}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

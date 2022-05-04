@@ -1,0 +1,217 @@
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+.govuk-fieldset--hidden {
+  display: none;
+}
+
+/* Display Message */
+.displayMessage {
+  color: #1d70b8;
+  font-size: x-large;
+}
+/* End of display Message */
+
+// Accessibility Developer Guide based css for implementing the contextual help - BEGIN
+*:focus {
+  outline: 2px dotted #000;
+}
+
+.adg-visually-hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.adg-tooltip-simple {
+  position: relative;
+}
+
+.adg-tooltip-simple-icon {
+  padding: 0 4px;
+}
+
+.adg-tooltip-simple-icon:hover {
+  cursor: default;
+}
+
+.adg-tooltip-simple-balloon {
+  background-color: #fff;
+  font-weight: normal;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 2px 6px;
+  position: absolute;
+  z-index: 1;
+  left: 100%;
+  top: -5px;
+  white-space: nowrap;
+  background-color: lightyellow;
+}
+
+svg#definition {
+  display: none;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: #00703c;
+}
+// Accessibility Developer Guide based css for implementing the contextual help - END
+
+// Element specific styling to display toolip adjacently
+.govuk-input--90 {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  box-sizing: border-box;
+  width: 90%;
+  height: 40px;
+  height: 2.5rem;
+  margin-top: 0;
+  padding: 5px;
+  border: 2px solid #0b0c0c;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.govuk-textarea--90 {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  box-sizing: border-box;
+  display: block;
+  width: 90%;
+  min-height: 40px;
+  margin-bottom: 20px;
+  padding: 5px;
+  resize: vertical;
+  border: 2px solid #0b0c0c;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.header3-bespoke {
+  font-family: "GDS Transport", arial, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  font-size: 1.2rem;
+}
+
+/* traffic light styling */
+.traffic-light {
+  text-align: center;
+  display: inline-block;
+  width: 80px;
+  color: white;
+  font-weight: bold;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 5px 5px 5px;
+  border: 1px solid grey;
+  font-family: "GDS Transport", arial, sans-serif;
+  //text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.traffic-light-red {
+  background-color: Red;
+}
+
+.traffic-light-amber {
+  background-color: Orange;
+}
+
+.traffic-light-green {
+  background-color: Green;
+}
+/* end of traffic light styling */
+
+
+@media print {
+  .govuk-link,
+  .govuk-back-link,
+  .hide-for-print {
+    display: none;
+  }
+}
+
+[aria-sort] button,
+[aria-sort] button:hover {
+  background-color: transparent;
+  border-width: 0;
+  -webkit-box-shadow: 0 0 0 0;
+  -moz-box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
+  color: #005ea5;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0 10px 0 0;
+  position: relative;
+  text-align: inherit;
+  font-size: 1em;
+  margin: 0;
+}
+
+[aria-sort] button:focus {
+  background-color: $govuk-focus-colour;
+  color: $govuk-focus-text-colour;
+  box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+  outline: none;
+}
+
+[aria-sort]:first-child button {
+  right: auto;
+}
+
+[aria-sort] button:before {
+  content: " \25bc";
+  position: absolute;
+  right: -1px;
+  top: 9px;
+  font-size: 0.5em;
+}
+
+[aria-sort] button:after {
+  content: " \25b2";
+  position: absolute;
+  right: -1px;
+  top: 1px;
+  font-size: 0.5em;
+}
+
+[aria-sort="ascending"] button:before,
+[aria-sort="descending"] button:before {
+  content: none;
+}
+
+[aria-sort="ascending"] button:after {
+  content: " \25b2";
+  font-size: .8em;
+  position: absolute;
+  right: -5px;
+  top: 2px;
+}
+
+[aria-sort="descending"] button:after {
+  content: " \25bc";
+  font-size: .8em;
+  position: absolute;
+  right: -5px;
+  top: 2px;
+}

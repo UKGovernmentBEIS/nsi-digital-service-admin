@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 0,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-09-05T20:50:55.056Z",
+    "end": "2021-09-05T20:52:06.175Z",
+    "duration": 71119,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "fda01c24-83f3-4a7c-a674-43c88801505e",
+      "title": "",
+      "fullFile": "cypress/integration/ProdPrototypeVoluntaryForm.js",
+      "file": "cypress/integration/ProdPrototypeVoluntaryForm.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [
+        {
+          "title": "Can User ACCESS VOLUNTARY FORM",
+          "fullTitle": "Can User ACCESS VOLUNTARY FORM",
+          "timedOut": null,
+          "duration": 9290,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "// cy.loginWithUser(); \ncy.loginWithDefaultUser();\nvtasklist.FormVoluntary();",
+          "err": {},
+          "uuid": "6b66f258-9fe6-4bc1-8fc9-f035a03e1691",
+          "parentUUID": "fda01c24-83f3-4a7c-a674-43c88801505e",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 1",
+          "fullTitle": "Can User Access Question 1",
+          "timedOut": null,
+          "duration": 16393,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "vtasklist.Question1();",
+          "err": {},
+          "uuid": "1c76d05a-100c-4950-a518-df891c93538f",
+          "parentUUID": "fda01c24-83f3-4a7c-a674-43c88801505e",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 2",
+          "fullTitle": "Can User Access Question 2",
+          "timedOut": null,
+          "duration": 5836,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist.Question2();",
+          "err": {},
+          "uuid": "19625ca8-b7fa-450c-aea4-7c363553c894",
+          "parentUUID": "fda01c24-83f3-4a7c-a674-43c88801505e",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 4",
+          "fullTitle": "Can User Access Question 4",
+          "timedOut": null,
+          "duration": 14966,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist.Question4();",
+          "err": {},
+          "uuid": "d254ee0d-5cae-4be9-ba43-b05116d339e6",
+          "parentUUID": "fda01c24-83f3-4a7c-a674-43c88801505e",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can User Access Question 7",
+          "fullTitle": "Can User Access Question 7",
+          "timedOut": null,
+          "duration": 24294,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "tasklist1.Question7();",
+          "err": {},
+          "uuid": "0813af78-43cd-4d6a-9177-92a43346662b",
+          "parentUUID": "fda01c24-83f3-4a7c-a674-43c88801505e",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [],
+      "passes": [
+        "6b66f258-9fe6-4bc1-8fc9-f035a03e1691",
+        "1c76d05a-100c-4950-a518-df891c93538f",
+        "19625ca8-b7fa-450c-aea4-7c363553c894",
+        "d254ee0d-5cae-4be9-ba43-b05116d339e6",
+        "0813af78-43cd-4d6a-9177-92a43346662b"
+      ],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 70779,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/report/mochawesome-report"
+      },
+      "version": "5.2.0"
+    }
+  }
+}

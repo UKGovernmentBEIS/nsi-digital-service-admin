@@ -1,0 +1,55 @@
+{
+  "name": "beisnotificationportal",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "jest",
+    "build-sass": "sass assets/scss/main.scss public/stylesheets/style.css",
+    "prettier": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@azure/identity": "^2.0.1",
+    "@azure/keyvault-secrets": "^4.3.0",
+    "@azure/msal-node": "^1.1.0",
+    "@ministryofjustice/frontend": "^1.0.0",
+    "axios": "^0.22.0",
+    "client-sessions": "^0.8.0",
+    "connect-pg-simple": "^6.2.1",
+    "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-fileupload": "^1.2.1",
+    "express-session": "^1.13.0",
+    "form-data": "^4.0.0",
+    "govuk-frontend": "^3.13.0",
+    "helmet": "^4.6.0",
+    "helmet-csp": "^3.4.0",
+    "http-errors": "~1.6.3",
+    "moment": "^2.29.1",
+    "morgan": "~1.9.1",
+    "nocache": "^3.0.1",
+    "notifications-node-client": "^5.1.0",
+    "nunjucks": "^3.2.3",
+    "pg-promise": "^10.11.0",
+    "uuid": "^7.0.3",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@jest-mock/express": "^1.4.2",
+    "babel-jest": "^27.0.6",
+    "husky": "^7.0.2",
+    "jest": "^27.0.6",
+    "lint-staged": "^11.1.2",
+    "prettier": "2.3.2",
+    "sass": "^1.35.2"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  }
+}

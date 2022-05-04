@@ -1,0 +1,155 @@
+{
+  "stats": {
+    "suites": 0,
+    "tests": 4,
+    "passes": 1,
+    "pending": 0,
+    "failures": 3,
+    "start": "2021-09-05T20:58:01.176Z",
+    "end": "2021-09-05T21:03:12.477Z",
+    "duration": 311301,
+    "testsRegistered": 4,
+    "passPercent": 25,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "561e9ff6-162a-4d96-8d1d-512a90ceb2cf",
+      "title": "",
+      "fullFile": "cypress/integration/Standardformfillup1.js",
+      "file": "cypress/integration/Standardformfillup1.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [
+        {
+          "title": "Can login as user",
+          "fullTitle": "Can login as user",
+          "timedOut": null,
+          "duration": 6275,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "cy.loginWithUser();",
+          "err": {},
+          "uuid": "6c4feac1-39da-4a50-b925-156de2d724bf",
+          "parentUUID": "561e9ff6-162a-4d96-8d1d-512a90ceb2cf",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can Fill up the standared form for 'Check before you start'  ",
+          "fullTitle": "Can Fill up the standared form for 'Check before you start'  ",
+          "timedOut": null,
+          "duration": 101074,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": null,
+          "code": "allform.Readandaccept();",
+          "err": {
+            "message": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `.govuk-list > :nth-child(1) > a`, but never found it.",
+            "estack": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `.govuk-list > :nth-child(1) > a`, but never found it.\n    at AllFormFunctions.Readandaccept (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:202:8)\n    at Context.eval (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:130:11)",
+            "diff": null
+          },
+          "uuid": "e4819e61-dc0d-491f-b9af-f01cec45f547",
+          "parentUUID": "561e9ff6-162a-4d96-8d1d-512a90ceb2cf",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can Fill up the standared form for 'Acquirer's or Representative's contact detailsCOMPLETED'  ",
+          "fullTitle": "Can Fill up the standared form for 'Acquirer's or Representative's contact detailsCOMPLETED'  ",
+          "timedOut": null,
+          "duration": 101306,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": null,
+          "code": "allform.AcquirerorRepresentativecontactdetails();",
+          "err": {
+            "message": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `//*[contains(text(),'Acquire')]`, but never found it.",
+            "estack": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `//*[contains(text(),'Acquire')]`, but never found it.\n    at CommonFunctions.navigateApplicationLink (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:283:8)\n    at AllFormFunctions.AcquirerorRepresentativecontactdetails (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:222:12)\n    at Context.eval (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:133:11)",
+            "diff": null
+          },
+          "uuid": "de469c4f-794a-46e9-9847-bd8b3608fc76",
+          "parentUUID": "561e9ff6-162a-4d96-8d1d-512a90ceb2cf",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can Fill up the standared form for 'Post-acquisitionshareownershipandvotingrightsdetails'  ",
+          "fullTitle": "Can Fill up the standared form for 'Post-acquisitionshareownershipandvotingrightsdetails'  ",
+          "timedOut": null,
+          "duration": 101245,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": null,
+          "code": "allform.Postacquisitionshareownershipandvotingrightsdetails();",
+          "err": {
+            "message": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `//*[contains(text(),'Post-acquisition share ownership')]`, but never found it.",
+            "estack": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `//*[contains(text(),'Post-acquisition share ownership')]`, but never found it.\n    at CommonFunctions.navigateApplicationLink (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:283:8)\n    at AllFormFunctions.Postacquisitionshareownershipandvotingrightsdetails (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:245:12)\n    at Context.eval (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup1.js:136:11)",
+            "diff": null
+          },
+          "uuid": "64fdd0ac-06b8-46d4-8cb4-9b9a06b45dc8",
+          "parentUUID": "561e9ff6-162a-4d96-8d1d-512a90ceb2cf",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [],
+      "passes": ["6c4feac1-39da-4a50-b925-156de2d724bf"],
+      "failures": [
+        "e4819e61-dc0d-491f-b9af-f01cec45f547",
+        "de469c4f-794a-46e9-9847-bd8b3608fc76",
+        "64fdd0ac-06b8-46d4-8cb4-9b9a06b45dc8"
+      ],
+      "pending": [],
+      "skipped": [],
+      "duration": 309900,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/report/mochawesome-report"
+      },
+      "version": "5.2.0"
+    }
+  }
+}

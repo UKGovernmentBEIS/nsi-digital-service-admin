@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.0000" tests="1" failures="1">
+  <testsuite name="Root Suite" timestamp="2021-09-17T11:23:07" tests="0" file="cypress/integration/Dashboard.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Dashboard" timestamp="2021-09-17T11:23:07" tests="1" time="0.0000" failures="1">
+    <testcase name="Dashboard Has link to notifications" time="0.0000" classname="Has link to notifications">
+      <failure message="Timed out retrying after 10000ms: expected &apos;http://localhost:3000/notifications&apos; to include &apos;/notificationsx&apos;" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 10000ms: expected 'http://localhost:3000/notifications' to include '/notificationsx'
+    at Context.eval (http://localhost:3000/__cypress/tests?p=cypress\integration\Dashboard.js:103:14)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

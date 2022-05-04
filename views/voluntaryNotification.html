@@ -1,0 +1,904 @@
+{% extends "layout.html" %}
+{% import "macros/forms.html" as forms %}
+
+{% block pageTitle %}
+Voluntary Notification: {{ reference }}
+{% endblock %}
+
+{% block beforeContent %}
+    <a class="govuk-back-link" id="navigateBackLink" name="navigateBackLink" href="/dashboard">Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {% set isNotifyingParty = data['q1iNotifyingPartyOrRepresentative'] == 'notifyingParty' %}
+      {% set isRepresentative = data['q1iNotifyingPartyOrRepresentative'] == 'representative' %}
+      {% set isQualifyingAsset = data["q3iiQualifyingAssetOrQualifyingEntity"] == 'qualifyingAsset' %}
+      {% set isStatementSelected = (data['cyaIAgree']|length > 0) and ('Yes' in data['cyaIAgree']) %}
+
+      <h1 class="govuk-heading-l">Voluntary Notification: {{ reference }}</h1>
+      
+      <h2 class="govuk-heading-m">1. Contact details and related notifications</h2>
+
+      
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q1-0: Which type of notifier are you?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetailsNoLabel(data.q10WhichType, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+        
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q1-1: Are you the notifier or a representative of the notifier?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetailsNoLabel(data.q1iNotifyingPartyOrRepresentative, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {% if isNotifyingParty %}Q1-2: About the notifier{% endif %}
+            {% if isRepresentative %}Q1-3: About the notifier and its authorised representative{% endif %}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if isNotifyingParty %}
+              {{ forms.checkYourAnswerDetails(data, ['q1iiNotifyingPartyName', 'q1iiNotifyingPartyBusinessaddress'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+            
+              {{ forms.checkYourAnswerDetails(data, 
+                ['q1iiNotifyingPartyIndividual', 'q1iiNotifyingPartyPosition', 'q1iiNotifyingPartyEmail', 'q1iiNotifyingPartyTelephone', 'q1iiAuthorised'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+              {% if data['q1iiAuthorised'] == 'No' %}
+              {{ forms.checkYourAnswerDetails(data, 
+                ['q1iiAuthorisedName', 'q1iiAuthorisedPosition', 'q1iiAuthorisedEmail', 'q1iiAuthorisedTelephone'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+              {% endif %}
+            {% endif %}
+
+            {% if isRepresentative %}
+              {{ forms.checkYourAnswerDetails(data,
+                ['q1iiiNotifyingPartyName', 'q1iiiNotifyingPartyIndividual', 'q1iiiNotifyingPartyEmail', 'q1iiiNotifyingPartyPhone'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+              {{ forms.checkYourAnswerDetails(data,
+                  ['q1iiiRepresentatives', 'q1iiiLeadRepresentatives', 'q1iiiAuthorisedIndividual', 'q1iiiRepresentativeEmail', 'q1iiiRepresentativePhone', 'q1iiiRelationship', 'q1iiiAuthorised'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q1-4: Is there more than one acquirer involved in this acquisition?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q1ivAdditionalAcquirer|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q1ivAdditionalAcquirer, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q1ivAdditionalAcquirer'] == 'Yes' and data['q1ivaAdditionalAcquirerList'].length >= 1 %}
+              <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q1ivaAdditionalAcquirerList'] %}
+              <li>{{ forms.checkYourAnswerDetails(item, ['q1ivaMultinotifiername', 'q1ivaMultinotifierindividualname', 'q1ivaMultinotifierRepresentative', 'q1ivaMultinotifierPercentage', 'q1ivaMultinotifierAddress', 'q1ivaMultinotifierPhone', 'q1ivaMultinotifierEmail'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q2-1: To the best of your knowledge, has the notifier acquirer submitted a notification to any overseas investment screening regimes within the last 12 months?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q2iSubmitTwelve|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q2iSubmitTwelve, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q2iSubmitTwelve'] == 'Yes' and data['q2iPreviousNotificationList'] and data['q2iPreviousNotificationList'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q2iPreviousNotificationList'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q2iCaseReference'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">2. Acquisition details</h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q3-1: Which sectors are relevant to this notification?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data['q3iSector'].length >= 1 %}
+
+              <p><strong>Sectors</strong>:</p>
+              {% for item in data['q3iSector'] %}
+                {% if OPTIONS.sectors[item] %}<p class="govuk-body">{{ OPTIONS.sectors[item] }}</p>{% endif %}
+              {% endfor %}
+
+              {% if OPTIONS.sectors[data['q3iSector']] %}<p class="govuk-body">{{ OPTIONS.sectors[data['q3iSector']] }}</p>{% endif %}
+            {% endif %}
+
+            {% if data['q3iiReason'] %}
+              {{ forms.checkYourAnswerDetails(data, ['q3iiReason'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q3-1: At what stage is the acquisition?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q3iaAcquisitionInContemplationOrTakenPlace'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q3-2: What are you notifying about?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q3iiQualifyingAssetOrQualifyingEntity'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        {% if isQualifyingAsset %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Q3-2: Will the acquisition provide the ability for the acquirer to use, control or direct the asset?
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ forms.checkYourAnswerDetails(data, ['question32aQualifyingEntity', 'question32aQualifyingEntityDetails'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+            </dd>
+            {% if isEditable %}
+            <dd class="govuk-summary-list__actions">
+            </dd>
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Q3-3: Which 'trigger events' apply to the acquisition?
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {% if data["question3iiiDetailsPercentageShare"]|length != 0 %}
+              <p>{{OPTIONS.triggerEvents[data.question3iiiDetailsPercentageShare]}}</p>
+              <p class="govuk-body"><strong>{{ OPTIONS.cyaLabels.voluntary.question3iiiDetailsPercentageShare }}</strong>: 
+                {{ data["question3iiiDetailsPercentageShareDetails"] }}
+              </p>
+              {% endif %}
+
+              {% if data["question3iiiDetailsPercentageVoting"]|length != 0 %}
+              <p>{{OPTIONS.triggerEvents[data.question3iiiDetailsPercentageVoting]}}</p>
+              <p class="govuk-body"><strong>{{ OPTIONS.cyaLabels.voluntary.question3iiiDetailsPercentageVoting }}</strong>: 
+                {{ data["question3iiiDetailsPercentageVotingDetails"] }}
+              </p>
+              {% endif %}
+              
+              {% if data["question3iiiDetailsPreventPassage"]|length != 0 %}
+              <p>{{OPTIONS.triggerEvents[data.question3iiiDetailsPreventPassage]}}</p>
+              <p class="govuk-body"><strong>{{ OPTIONS.cyaLabels.voluntary.question3iiiDetailsPreventPassage }}</strong>: 
+                {{ data["question3iiiDetailsPreventPassageDetails"] }}
+              </p>
+              {% endif %}
+
+              {% if data["question3iiiDetailsEnableInfluence"]|length != 0 %}
+              <p>{{OPTIONS.triggerEvents[data.question3iiiDetailsEnableInfluence]}}</p>
+              <p class="govuk-body"><strong>{{ OPTIONS.cyaLabels.voluntary.question3iiiDetailsEnableInfluence }}</strong>: 
+                {{ data["question3iiiDetailsEnableInfluenceDetails"] }}
+              </p>
+              {% endif %}
+            </dd>
+            {% if isEditable %}
+            <dd class="govuk-summary-list__actions">
+
+            </dd>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q4-1: When is the acquisition expected to take place?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data['q4iaquisitionDateDay'] and data['q4iaquisitionDateMonth'] and data['q4iaquisitionDateYear'] %}
+              <p><strong>Date</strong>: {{data['q4iaquisitionDateDay']}}/{{data['q4iaquisitionDateMonth']}}/{{data['q4iaquisitionDateYear']}}</p>
+            {% endif %}
+
+            {{ forms.checkYourAnswerDetails(data, ['q4iAdditionalInfo', 'q3iDontKnow'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q4-2: UK regulatory approvals
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q4iiRegulatoryApproval|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q4iiRegulatoryApproval, OPTIONS.valueMappings) }}
+            {% endif %}
+            {% if data['q4ibRegulatoryApprovalList']|length >= 1 %}
+              <ul class="govuk-list  govuk-list--bullet">
+                {% for item in data['q4ibRegulatoryApprovalList'] %}
+                  <li>
+                    {{ forms.checkYourAnswerDetails(item, ['q4ibRegulatorName', 'q4ibAdditionalInfo'], OPTIONS.cyaLabels.retrospective, OPTIONS.valueMappings) }}
+                    {% if item['q4ibRegulatoryApprovalDate'] %}
+                    <p><strong>Date</strong>: {{ item['q4ibRegulatoryApprovalDate'] }}</p>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q4-3: Other key dates
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q4iiiOtherKeyDates'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+
+            {% if data['q4icKeyDatesList'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q4icKeyDatesList'] %}
+                <li>
+                  <p><strong>Key Date</strong>: {{ item['question4icKeyDate'] }}</p>
+                  {{ forms.checkYourAnswerDetails(item, ['question4icShortDescription'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+                </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+      </dl>
+
+      {% if not isQualifyingAsset %}
+      <h2 class="govuk-heading-m">3. Qualifying entity details</h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-1: About the qualifying entity
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q5iNameQualifyingEntity', 'q5iNameIndividualQualifyingEntity', 'q5iEmail', 'q5iTelephone', 'q5iCountry', 'q5iRegistration', 'q5iActivities', 'q5iActivitiesDescription', 'q5iBusinessAddress', 'q5iWebsite', 'q5iDescription', 'q5iCompaniesHouse', 'q5iSIC'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-2: To the best of your knowledge, is the qualifying entity authorised to receive or hold information that has a UK Government Security Classification?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5iiIsAuthorised|length > 0 %}
+              <p>{{ OPTIONS.multipleChoice[data.q5iiIsAuthorised] }}</p>
+            {% endif %}
+
+            {% if data['q5iiIsAuthorised'] == 'Yes' and data['q5iiaClassificationListItems'].length >= 1 %}
+              <ul class="govuk-list govuk-list--bullet">
+                {% for item in data['q5iiaClassificationListItems'] %}
+                  <li>{{ forms.checkYourAnswerDetails(item, ['q5iiaHighestClassification', 'q5iiaDepartment', 'q5iiaOther', 'q5iiaDescription', 'q5iiaAdditionalInfo'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-3: To the best of your knowledge, does the qualifying entity hold any licences to operate within its sector in the UK?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5iiiIsLicenseRequired|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5iiiIsLicenseRequired, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q5iiiIsLicenseRequired'] == 'Yes' and data['q5iiiaLicenceListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q5iiiaLicenceListItems'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q5iiiaLicence', 'q5iiiaIssuer'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+                  <p class="govuk-body"><strong>Date Issued</strong>: 
+                    {{ item.q5iiiaIssueDateDay }}/{{ item.q5iiiaIssueDateMonth }}/{{ item.q5iiiaIssueDateYear }}
+                  </p>
+                </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-4: To the best of your knowledge, does the qualifying entity hold or own any dual-use items?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5ivIsDualUse|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5ivIsDualUse, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q5ivIsDualUse'] == 'Yes' and data['q5ivaDualUseListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q5ivaDualUseListItems'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q5ivaItemName', 'q5ivaDescription'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-5: To the best of your knowledge, in the last 5 years has the qualifying entity had a supply relationship with the UK government in any of the following areas?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5vIsPartyTo|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5vIsPartyTo, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q5vIsPartyTo'] == 'Yes' and data['q5vaPartyToListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q5vaPartyToListItems'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q5vaSupplyRelationship', 'q5vaArea', 'q5vaDepartment'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-6: To the best of your knowledge, in the last 5 years has the qualifying entity entered into any research and development that has been partly or wholly funded by the UK government in the following areas?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5viIsFundedResearch|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5viIsFundedResearch, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q5viIsFundedResearch'] == 'Yes' and data['q5viaFundedResearchListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q5viaFundedResearchListItems'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q5viaName', 'q5viaArea', 'q5viaDescription', 'q5viaDepartment'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-7: To the best of your knowledge, is the qualifying entity currently party to any contracts that require personnel to hold National Security Vetting (NSV) clearance?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5viiIsNSVSC|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5viiIsNSVSC, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q5viiIsNSVSC'] == 'Yes' and data['q5viiaNSVSCListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">  
+              {% for item in data['q5viiaNSVSCListItems'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q5viiaLevel', 'q5viiaHowMany'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q6-1: Pre-acquisition structure chart of qualifying entity
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.downloadDocument(data['fileuploadPreAcquisitionChartId'], data['q6iPreAcquisitionChartFileName']) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q6-2: Expected post-acquisition structure chart of qualifying entity
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.downloadDocument(data['fileuploadPostAcquisitionChartId'], data['q6iiPostAcquisitionChartFileName']) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q6-3: To the best of your knowledge, does any non-UK government have a direct or indirect role in the operation or decision making of the qualifying entity?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q6iiiNonUKGovt|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q6iiiNonUKGovt, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q6iiiNonUKGovt'] == 'Yes' and data['nonUKGovernmentList'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet"> 
+              {% for item in data['nonUKGovernmentList'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q6iiiNonUKGovernmentName', 'q6iiiGovernmentInterest'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+      </dl>
+      {% endif %}
+
+      {% if isQualifyingAsset %}
+      <h2 class="govuk-heading-m">3. Qualifying asset</h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-1: About the qualifying asset
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q5altiNameOfAsset', 'q5altiAssetType', 'q5altiAddress', 'q5altiDescription', 'q5altiAdditionalInfo'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-2: To the best of your knowledge, does the qualifying asset have a UK government Security Classification?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5altiiIsAuthorised|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5altiiIsAuthorised, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q5altiiIsAuthorised'] == 'Yes' and data['q5altiiaClassificationListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">  
+              {% for item in data['q5altiiaClassificationListItems'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q5altiiaHighestClassification', 'q5altiiaDepartment', 'q5altiiaOther', 'q5altiiaDescription', 'q5altiiaAdditionalInfo'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-3: To the best of your knowledge, does the owner of the qualifying asset hold any licences to operate within its sector in the UK?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5altiiiIsLicenseRequired|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5altiiiIsLicenseRequired, OPTIONS.valueMappings) }}
+            {% endif %}
+
+            {% if data['q5altiiiIsLicenseRequired'] == 'Yes' and data['q5altiiiaLicenceListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">  
+              {% for item in data['q5altiiiaLicenceListItems'] %}
+                <li>
+                  {{ forms.checkYourAnswerDetails(item, ['q5altiiiaLicence', 'q5altiiiaIssuer'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+                  <p class="govuk-body"><strong>Date Issued</strong>: 
+                    {{ item.q5altiiiaIssueDateDay }}/{{ item.q5altiiiaIssueDateMonth }}/{{ item.q5altiiiaIssueDateYear }}
+                  </p>
+                </li>
+
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-4: To the best of your knowledge, is the qualifying asset considered to be a dual-use item?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q5altivIsDualUse|length > 0 %}
+              {{ forms.checkYourAnswerDetailsNoLabel(data.q5altivIsDualUse, OPTIONS.valueMappings) }}
+            {% endif %}
+            {{ forms.checkYourAnswerDetails(data, ['q5altivAdditionalInfo'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+
+            {% if data['q5altivIsDualUse'] == 'Yes' and data['q5altivaDualUseListItems'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">  
+              {% for item in data['q5altivaDualUseListItems'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q5altivaItemName', 'q5altivaDescription'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-5: To the best of your knowledge, is the qualifying asset used to gather or hold data on UK citizens?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetailsNoLabel(data.q5altvData, OPTIONS.valueMappings) }}
+
+            {{ forms.checkYourAnswerDetails(data, ['q5altvDescription', 'q5altvAdditionalInfo'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q5-6: Does the qualifying asset hold any UK or internationally recognised standards, accreditations or certifications relevant to the sectors covered by this notification?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetailsNoLabel(data.q5altviData, OPTIONS.valueMappings) }}
+
+            {{ forms.checkYourAnswerDetails(data, ['q5altviName', 'q5altviAdditionalInfo'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q6-1: Pre-acquisition structure of qualifying asset
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.downloadDocument(data['fileuploadPreAcquisitionChartAssetId'], data['q6iPreAcquisitionChartFileNameAsset']) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q6-2: Post-acquisition structure of qualifying asset
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.downloadDocument(data['fileuploadPostAcquisitionChartAssetId'], data['q6iiPostAcquisitionChartFileNameAsset']) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q6-3: To the best of your knowledge, does any non-UK government have a direct or indirect role in controlling how the qualifying asset is used?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q6iiiContractualArrangementAsset', 'q6vAdditionalInformation'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q6-5: Additional information
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q6vAdditionalInformation'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+      </dl>
+      {% endif %}
+
+      <h2 class="govuk-heading-m">4. Acquiring party details</h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q7-1: About the acquirer
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q7iNameOfAcquirer', 'q7iCountryOfOrigin', 'q7iEntityOrIndividual'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q7-1: Registration details of acquirer
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q7iIncorporatedOutsideUk', 'q7iRegistrationDetailsCountryOfCorporation', 'q7iCompaniesHouseReference', 'q7iSICReference'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q7-1: Acquirer's products, services and activities
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q7iDescriptionProductActivities', 'q7iAcquirerAdditionalInformation'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q7-2: Non-UK governments or representatives that have share ownership or voting rights in the acquirer
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q7iiNonUKGovt|length > 0 %}
+            <p>{{data.q7iiNonUKGovt}}</p>
+            {% endif %} 
+            {% if data['q7iiNonUKGovernmentList'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q7iiNonUKGovernmentList'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q7iiNameOfNonUKGoverment', 'q7iiNameOfPersonActingNonUKGoverment', 'q7iiShareOwnershipVotingRights', 'q7iiAnythingToDeclare'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q7-3: Non-UK governments or representatives that have a role in the operation or decision making of the acquirer
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data.q7iiiNonUKGovt|length > 0 %}
+              <p>{{data.q7iiiNonUKGovt}}</p>
+            {% endif %}
+            {% if data['q7iiiNonUKRoleInOperationList'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q7iiiNonUKRoleInOperationList'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q7iiiNameOfNonUKGoverment', 'q7iiiBriefInterestDescription'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+              <p>No</p>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q7-3: To the best of your knowledge, does any non-UK government have a direct or indirect role in the operation or decision making of the acquirer?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetailsNoLabel(data.q7ivContractualArrangements, OPTIONS.valueMappings) }}
+
+            {{ forms.checkYourAnswerDetails(data, ['q7ivContractualArrangementsSummary', 'q7viAdditionalInformation'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q7-4: To the best of your knowledge, does any non-UK government have a direct or indirect role in the operation or decision making of the acquirer?
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.checkYourAnswerDetails(data, ['q7ivContractualArrangements', 'q7ivContractualArrangementsSummary', 'q7viAdditionalInformation'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q8-1: Structure chart of acquirer
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.downloadDocument(data['fileuploadControllingOwnershipChartId'], data['q8iControllingOwnershipFileName']) }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q8-2: Members of board of directors or equivalent within the acquirer
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {% if data['q8iiBoardMembersList'].length >= 1 %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for item in data['q8iiBoardMembersList'] %}
+                <li>{{ forms.checkYourAnswerDetails(item, ['q8iiNameOfBoardMember', 'q8iiDateOfBirth', 'q8iiPositionHeld', 'q8iiClassifiedPolitically'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m">5. Additional information</h2>
+
+      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Q9-1: Other relevant documentation and information on the acquisitio
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ forms.downloadDocument(data['fileuploadAdditionalDocumentation1Id'], data['fileuploadAdditionalDocumentation1Name']) }}
+            {{ forms.downloadDocument(data['fileuploadAdditionalDocumentation2Id'], data['fileuploadAdditionalDocumentation2Name']) }}
+            {{ forms.downloadDocument(data['fileuploadAdditionalDocumentation3Id'], data['fileuploadAdditionalDocumentation3Name']) }}
+            {{ forms.downloadDocument(data['fileuploadAdditionalDocumentation4Id'], data['fileuploadAdditionalDocumentation4Name']) }}
+            <div>
+              {{ forms.checkYourAnswerDetails(data, ['q9iOtherComments'], OPTIONS.cyaLabels.voluntary, OPTIONS.valueMappings) }}
+            </div>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            
+          </dd>
+        </div>
+      </dl>
+
+      {% if multiNotifierItems %}
+        <div class="govuk-form-group">
+          <table class="govuk-table" id="notificationListTable">
+          <caption class="govuk-table__caption govuk-table__caption--m">Multi Notifier Information</caption>
+          <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Reference</th>
+                  <th scope="col" class="govuk-table__header">Joint Notification Reference</th>
+                  <th scope="col" class="govuk-table__header">Acquirer</th>
+                  <th scope="col" class="govuk-table__header">Date created</th>
+                  <th scope="col" class="govuk-table__header">Status</th>
+              </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+          {% for item in multiNotifierItems %}
+              <tr class="govuk-table__row">
+                {% if item.status == "In Progress" or item.status == "Request for Information"  %}
+                    <td class="govuk-table__cell">{{ item.reference }}</td>
+                  {% else %}
+                    <td class="govuk-table__cell"><a href="/notification/{{ item.reference }}">{{ item.reference }}</a></td>
+                  {% endif %}
+                  <td class="govuk-table__cell">{{ item.jointreference }}</td>
+                  <td class="govuk-table__cell">{{ item.acquirer }}</td>
+                  <td class="govuk-table__cell">{{ item.createddate }}</td>
+                  <td class="govuk-table__cell">{{ item.status }}</td>          
+              </tr>
+          {% endfor %}
+          </tbody>
+          </table>
+        </div>
+      {% endif %}
+
+      {% if decisionNotes %}
+      <h2 class="govuk-heading-m">Case worker opinion</h2>
+      <p>{{ decisionNotes.propose }}</p>
+      <p>{{ decisionNotes.additionalInfo }}</p>
+      {% endif %}
+
+      {% if not isDisableActions %}
+      <a href="/notes/{{ reference }}" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+        Create / View notes
+      </a>
+
+      {% if isCaseWorker %}
+      <div>
+        <a href="/decision/{{ reference }}" class="govuk-button" data-module="govuk-button">
+          Refer for decision
+        </a>
+      </div>
+      {% endif %}
+
+      {% if isTeamLead %}
+      <div>
+        <a href="/request-more-information/{{ reference }}" class="govuk-button" data-module="govuk-button">
+          Request more information
+        </a>
+
+        {% if multiNotifierItems %}
+          <a href="/rejectall/{{ multinotificationid }}" class="govuk-button" data-module="govuk-button">
+            Reject All Notifications
+          </a>
+
+          <a href="/acceptall/{{ multinotificationid }}" class="govuk-button" data-module="govuk-button">
+            Accept All Notifications
+          </a>
+        {% else %}
+          <a href="/reject/{{ reference }}" class="govuk-button" data-module="govuk-button">
+            Reject Notification
+          </a>
+
+          <a href="/accept/{{ reference }}" class="govuk-button" data-module="govuk-button">
+            Accept Notification
+          </a>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+</div>
+{% endblock %}

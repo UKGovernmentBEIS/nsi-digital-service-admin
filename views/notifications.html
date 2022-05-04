@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% import "macros/forms.html" as forms %}
+
+{% block pageTitle %}
+Notifications
+{% endblock %}
+
+{% block beforeContent %}
+    <a class="govuk-back-link" id="navigateBackLink" name="navigateBackLink" href="/">Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">
+            {% if isClaimedView == true %}
+            My Claimed
+            {% elif isAllView == true %}
+            Open
+            {% elif isPendingView == true %}
+            Pending Decision
+            {% endif %}
+            Notifications
+        </h1>
+
+        {% if statusMessage %}
+        <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Important
+              </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+              <p class="govuk-notification-banner__heading">{{ statusMessage }}</p>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="govuk-form-group">
+            <table class="govuk-table" id="notificationListTable" data-module="moj-sortable-table">
+            <caption class="govuk-table__caption govuk-table__caption--m">Notifications</caption>
+            {{ forms.filter(searchTerm) }}
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th scope="col" class="govuk-table__header" aria-sort="none">Reference</th>
+                    <!--<th scope="col" class="govuk-table__header" aria-sort="none">Joint Notification Reference</th>-->
+                    <th scope="col" class="govuk-table__header" aria-sort="none">Acquirer</th>
+                    <th scope="col" class="govuk-table__header" aria-sort="none">Date submitted</th>
+                    <th scope="col" class="govuk-table__header" aria-sort="none">Status</th>
+                    {% if isClaimedView == false %}
+                    <th scope="col" class="govuk-table__header" aria-sort="none">Owner</th>
+                    {% endif %}
+                    <th scope="col" class="govuk-table__header" aria-sort="none">Elapsed</th>
+                    {% if isClaimedView == false and isPendingView == false %}
+                    <th scope="col" class="govuk-table__header" aria-sort="none">Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            {% for item in data %}
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <a href="/notification/{{ item.reference }}">{{ item.reference }}</a>
+                    </td>
+                    <!--<td class="govuk-table__cell">{{ item.jointNotificationReference }}</td>-->
+                    <td class="govuk-table__cell" data-sort-value="{{ item.sortableAcquirer }}">{{ item.acquirer }}</td>
+                    <td class="govuk-table__cell" data-sort-value="{{ item.sortabledatesubmitted }}">{{ item.datesubmitted }}</td>
+                    <td class="govuk-table__cell">{{ item.status }}</td>
+                    {% if isClaimedView == false %}
+                    <td class="govuk-table__cell">{{item.ownertype}}</td>
+                    {% endif %}
+                    <td class="govuk-table__cell" data-sort-value="{{ item.ragStatus.elapsedDays }}"><div class="rag-status rag-status--{{item.ragStatus.state}}">{{ item.ragStatus.elapsedDays }} Days</div></td>
+                    {% if isClaimedView == false and isPendingView == false %}
+                    <td class="govuk-table__cell"><a href="/claim-for-review/{{ item.reference }}" class="govuk-link">Claim for review</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

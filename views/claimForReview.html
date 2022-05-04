@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% import "macros/forms.html" as forms %}
+
+{% block pageTitle %}
+Claim for review
+{% endblock %}
+
+{% block beforeContent %}
+    <a class="govuk-back-link" id="navigateBackLink" name="navigateBackLink" href="/notifications/all">Back</a>
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form class="form" id="claimForReviewForm" name="claimForReviewForm" action="/claim-for-review/{{ reference }}" method="post">
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                    {{ forms.legend("claimForReviewHeading", "Are you sure you want to claim notification: " + reference + " for review?") }}
+    
+                    <div class="govuk-radios">
+                        {{ forms.radio("Yes",
+                            "claimForReviewYes", "claimForReview", "Yes", false) }}
+    
+                        {{ forms.radio("No",
+                            "claimForReviewNo", "claimForReview", "No", false) }}
+                    </div>
+                </fieldset>
+            </div>
+            {{ forms.saveAndContinueButton("claimForReviewSubmitButton") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

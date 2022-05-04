@@ -1,0 +1,132 @@
+{
+  "stats": {
+    "suites": 0,
+    "tests": 3,
+    "passes": 1,
+    "pending": 0,
+    "failures": 2,
+    "start": "2021-09-05T20:52:45.359Z",
+    "end": "2021-09-05T20:56:11.097Z",
+    "duration": 205738,
+    "testsRegistered": 3,
+    "passPercent": 33.33333333333333,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "45574c14-6ff3-4407-af03-5e18c67a403e",
+      "title": "",
+      "fullFile": "cypress/integration/Standardformfillup.js",
+      "file": "cypress/integration/Standardformfillup.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [
+        {
+          "title": "Can login as user",
+          "fullTitle": "Can login as user",
+          "timedOut": null,
+          "duration": 4426,
+          "state": "passed",
+          "speed": "slow",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "cy.loginWithUser();",
+          "err": {},
+          "uuid": "581040a7-1e41-48e7-8ef8-0dc41d78988a",
+          "parentUUID": "45574c14-6ff3-4407-af03-5e18c67a403e",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can Fill up the standared form for 'Check before you start'  ",
+          "fullTitle": "Can Fill up the standared form for 'Check before you start'  ",
+          "timedOut": null,
+          "duration": 100396,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": null,
+          "code": "cy.get(LINK_MANADATORY_NOTIFICATION).click();\ncy.WaitForBrowser();\ncommon.navigateApplicationLink(READ_AND_ACCEPT_GUIDELINES); //cy.get(READ_AND_ACCEPT_GUIDELINES).click();\ncy.WaitForBrowser();\ncommon.navigateApplicationLink(\"Filling in your mandatory notification\"); //cy.get(ACCORDION_DEFAULT_HEADING).click();\ncy.WaitForBrowser();\ncy.get(VOTING_AND_SHAREHOLDING_CRITERIA).click();\ncy.get(SECTOR_FOR_WHICH_THE_NOTIFICATION_APPLIES).click();\ncy.get(BEFORE_YOU_SUBMIT).click();\ncy.WaitForBrowser();\ncy.get(GUIDELINES_CHECK_BOX).click();\ncy.WaitForBrowser();\ncy.get(SUBMITBUTTON).click();\ncy.WaitForBrowser();\ncy.get(STEP1_STATUS).invoke(\"text\").should(\"eq\", \"Completed\");",
+          "err": {
+            "message": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `.govuk-list > :nth-child(1) > a`, but never found it.",
+            "estack": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `.govuk-list > :nth-child(1) > a`, but never found it.\n    at Context.eval (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup.js:156:6)",
+            "diff": null
+          },
+          "uuid": "3f4f7d6b-f104-4811-a967-ec659f3eb7ce",
+          "parentUUID": "45574c14-6ff3-4407-af03-5e18c67a403e",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Can Fill up the standared form for 'Acquirer's or Representative's contact detailsCOMPLETED'  ",
+          "fullTitle": "Can Fill up the standared form for 'Acquirer's or Representative's contact detailsCOMPLETED'  ",
+          "timedOut": null,
+          "duration": 100459,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": null,
+          "code": "common.navigateApplicationLink(\"Acquire\");\ncommon.selectDropdown(\"//select[@id='question1-i']\", \"Acquirer\");\ncy.get(ACQUIRER_FULLNAME).type(INPUT_VALUE);\ncy.get(ACQUIRER_ORG).type(INPUT_VALUE);\ncy.get(ACQUIRER_ROLE).type(INPUT_VALUE);\ncy.get(ACQUIRER_ADD).type(INPUT_VALUE);\ncy.get(ACQUIRER_EMAIL).type(EMAIL);\ncy.get(ACQUIRER_AGREE).click();\ncy.get(ACQUIRER_YES).click();\ncy.get(ACQUIRER_NOTI_NAME).type(INPUT_VALUE);\ncy.get(ACQUIRER_NOTI_INDI_NAME).type(INPUT_VALUE);\ncy.get(ACQUIRER_NOTI_EMAIL).type(EMAIL);\ncy.get(ACQUIRER_NOTI_ADDITIONALINFO).type(INPUT_VALUE);\ncy.get(ACQUIRER_NOTI_ADDDETAILS).click();\ncy.get(ACQUIRER_NOTI_LINK_YES).click();\ncy.get(ACQUIRER_NOTI_CASE_REF).type(INPUT_VALUE);\ncy.get(ACQUIRER_NOTI_CASE_ADDDETAILS).click();\ncy.get(SUBMITBUTTON).click();\ncy.get(ACQUIRER_STATUS).invoke(\"text\").should(\"eq\", \"Completed\");",
+          "err": {
+            "message": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `//*[contains(text(),'Acquire')]`, but never found it.",
+            "estack": "AssertionError: Timed out retrying after 100000ms: Expected to find element: `//*[contains(text(),'Acquire')]`, but never found it.\n    at CommonFunctions.navigateApplicationLink (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup.js:216:8)\n    at Context.eval (https://nsinotification.azurewebsites.net/__cypress/tests?p=cypress\\integration\\Standardformfillup.js:175:10)",
+            "diff": null
+          },
+          "uuid": "57cbf8fe-a4a4-4925-aa89-17e87b82c3f1",
+          "parentUUID": "45574c14-6ff3-4407-af03-5e18c67a403e",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [],
+      "passes": ["581040a7-1e41-48e7-8ef8-0dc41d78988a"],
+      "failures": [
+        "3f4f7d6b-f104-4811-a967-ec659f3eb7ce",
+        "57cbf8fe-a4a4-4925-aa89-17e87b82c3f1"
+      ],
+      "pending": [],
+      "skipped": [],
+      "duration": 205281,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/report/mochawesome-report"
+      },
+      "version": "5.2.0"
+    }
+  }
+}

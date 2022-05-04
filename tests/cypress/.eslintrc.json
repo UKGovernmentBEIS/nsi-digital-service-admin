@@ -1,0 +1,32 @@
+{
+  "globals": {
+    "after": true,
+    "before": true,
+    "describe": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "module": true,
+    "it": true,
+    "context": true,
+    "cy": true,
+    "Cypress": true,
+    "require": true,
+    "process": true,
+    "expect": true,
+    "window": true,
+    "__filename": true
+  },
+  "plugins": ["cypress", "chai-friendly"],
+  "parser": "babel-eslint",
+  "rules": {
+    "cypress/no-assigning-return-values": "error",
+    "cypress/no-unnecessary-waiting": "error",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "warn",
+    "cypress/no-async-tests": "error",
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2,
+    "indent": ["error", 2]
+  },
+  "extends": ["eslint:recommended", "plugin:chai-friendly/recommended"]
+}

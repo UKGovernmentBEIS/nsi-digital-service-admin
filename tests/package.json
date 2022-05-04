@@ -1,0 +1,49 @@
+{
+  "scripts": {
+    "start": "cypress open",
+    "test": "cypress run",
+    "lint": "npx eslint ."
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/eslint-parser": "^7.13.14",
+    "@types/lodash": "^4.14.171",
+    "ajv": "^5.0.0",
+    "babel-eslint": "^10.1.0",
+    "cypress": "^8.0.0",
+    "cypress-eslint-preprocessor": "^1.2.2",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-get-table": "^1.0.1",
+    "cypress-real-events": "^1.5.0",
+    "cypress-wait-until": "^1.7.1",
+    "cypress-xpath": "*",
+    "eslint": "^7.25.0",
+    "eslint-plugin-chai-friendly": "^0.7.1",
+    "eslint-plugin-cypress": "^2.11.3",
+    "husky": "^6.0.0",
+    "jshint": "^2.13.0",
+    "mochawesome": "^6.2.2",
+    "mochawesome-merge": "^4.2.0",
+    "oracledb": "^5.2.0"
+  },
+  "jshintConfig": {
+    "camelcase": true,
+    "curly": true,
+    "esversion": 6,
+    "expr": true,
+    "sub": true,
+    "globals": {
+      "Cypress": false,
+      "cy": false,
+      "expect": false
+    },
+    "mocha": true,
+    "node": true,
+    "trailing": true,
+    "undef": true,
+    "unused": false
+  },
+  "dependencies": {
+    "mocha": "^9.1.1"
+  }
+}

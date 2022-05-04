@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% import "macros/forms.html" as forms %}
+
+{% block pageTitle %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Dashboard</h1>
+        <ul class="govuk-list govuk-list--bullet">
+          <li><a href="/notifications/all">View Open Notifications</a></li>
+          <li><a href="/notifications/claimed">My Claimed Notifications</a></li>
+          <li><a href="/notifications/pending">Pending Decision Notifications</a></li>
+          <li><a href="/notifications/in-progress">In Progress Notifications</a></li>
+          <li><a href="/notifications/rejected">Rejected Notifications</a></li>
+          <li><a href="/notifications/accepted">Accepted Notifications</a></li>
+          <li><a href="/notifications/referred">Referred to Notifier Notifications</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

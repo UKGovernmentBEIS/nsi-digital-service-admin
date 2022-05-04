@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.0280" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2021-09-17T11:19:48" tests="0" file="cypress/integration/Dashboard.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Dashboard" timestamp="2021-09-17T11:19:48" tests="1" time="0.0280" failures="0">
+    <testcase name="Dashboard Has link to notifications" time="0.0280" classname="Has link to notifications">
+    </testcase>
+  </testsuite>
+</testsuites>
